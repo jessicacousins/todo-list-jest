@@ -70,6 +70,8 @@ test("user-events allows users to add tasks", () => {
   expect(getByText("learn spanish")).toBeInTheDocument();
 });
 
+
+
 //? mock todo example
 test("renders sample todos list correctly", () => {
   const mockTodos = [
@@ -77,11 +79,13 @@ test("renders sample todos list correctly", () => {
     { text: "test my app with Jest", isCompleted: false },
     { text: "learn to code", isCompleted: false },
   ];
+
   const { getByText } = render(<App />, {
     wrapper: ({ children }) => (
       <mockTodo value={mockTodos}>{children}</mockTodo>
     ),
   });
+
   mockTodos.forEach((todo) => {
     const todoElement = getByText(todo.text);
     expect(todoElement).toBeInTheDocument();
