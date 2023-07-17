@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import App from "./App";
 import Header from "./Header";
 
-// * Jest Test Area
+// * * * * * * Jest Test Area * * * * * *
 
 test("renders App component", () => {
   render(<App />);
@@ -23,12 +23,12 @@ test("ToDo", () => {
   getByText(/test my app with Jest/i);
 });
 
-test("fireEvent - add items to list", () => {
+test("ToDo learn to code", () => {
   const { getByText } = render(<App />);
   getByText(/learn to code/i);
 });
 
-// * Header Jest Test to check the title attribute
+// ? Header title example:
 test("Header component title", () => {
   const title = "Task Tracker";
   const { getByText } = render(<Header title={title} />);
@@ -70,8 +70,6 @@ test("user-events allows users to add tasks", () => {
   expect(getByText("learn spanish")).toBeInTheDocument();
 });
 
-
-
 //? mock todo example
 test("renders sample todos list correctly", () => {
   const mockTodos = [
@@ -90,4 +88,21 @@ test("renders sample todos list correctly", () => {
     const todoElement = getByText(todo.text);
     expect(todoElement).toBeInTheDocument();
   });
+});
+
+// ? mock API call
+test("mock adding a new task to the Todo list from the mock API", async () => {
+  const { getByPlaceholderText } = render(<App />);
+  const apiCreateItem = jest.fn();
+  apiCreateItem.mockReturnValue("make coffee");
+
+  const input = getByPlaceholderText("Add Task...");
+
+  fireEvent.change(input, { target: { value: "make coffee" } });
+  fireEvent.keyPress(input, { key: "Enter" });
+
+  apiCreateItem("make coffee");
+
+  expect(apiCreateItem).toBeCalledTimes(1);
+  expect(apiCreateItem).toBeCalledWith("make coffee");
 });
